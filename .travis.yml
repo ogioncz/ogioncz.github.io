@@ -1,19 +1,33 @@
 language: haskell
+ghc: 7.8
+
 branches:
   only:
     - source
+
+sudo: false
+
+cache:
+  directories:
+    - .cabal-sandbox
+
 env:
   global:
-    - secure: "SsmTZ4HX787nlHh6gMUYj4EOJsyE5X/JZD6Y2IsEHrWj/MvnZz4K6e9kFqhwjLJgBIKstlLoKPndpDtrk8CsHW+dYM+SrbdoxRQyiwdVTY1LGyHt51TB2+JwrrGY212BI3H8lfxQUQualdSENYxdQ6xRaPGKO0lJBkzAPIpcsEA="
+    -   secure: "WsWzMk3XoM3rS+QOt2IGzAGE5H36pkXcdsZ62UaCjI9P7/XjANt2/NwWSb+1AxL70EFg1AG5fulFIka+jgftsCAKB7zuVKu//M1mCpKsoG+zsSB+ZyuHNTmLwdz0lnmYFb2bTrUQAEMcUcA/wGizIoaDNhHE+1Y2J46bxGzRGEA="
+
 install:
-  - cabal install hakyll
+  - cabal sandbox init
+  - cabal install -j hakyll
   - ghc --make site.hs
+
 before_script:
   - cd _site
   - git checkout master
   - git pull origin master
   - cd ..
+
 script: ./site build
+
 after_script:
   - cd _site
   - git status
