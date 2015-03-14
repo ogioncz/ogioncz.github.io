@@ -17,7 +17,7 @@ env:
 install:
   - cabal sandbox init
   - cabal install -j hakyll
-  - ghc --make site.hs
+  - cabal build
 
 before_script:
   - cd _site
@@ -25,7 +25,7 @@ before_script:
   - git pull origin master
   - cd ..
 
-script: ./site build
+script: ./dist/build/site/site build
 
 after_script:
   - cd _site
